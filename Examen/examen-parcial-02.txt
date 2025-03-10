@@ -9,6 +9,7 @@ Peguen el contenido de este documento en ese archivo.
 Nota: Este archivo se encuentra en la rama main. Deberán cambiar a la rama con su nombre. Si aún no tienen una rama con su nombre, créenla antes de continuar.
 
 Cómo responder el examen:
+Seccion 1:
 Para seleccionar una respuesta, marquen una flecha (<---) en el inciso que consideren correcto. Ejemplo:
 
 1. ¿Este es un ejemplo de una pregunta en su examen?
@@ -16,6 +17,16 @@ a) Posible respuesta
 b) Posible respuesta
 c) Posible respuesta <--- (Esta es la opción seleccionada)
 d) Posible respuesta
+
+Seccion 2: 
+Solo indicar la leta V o F. Ejemplo:
+1. para crear una copia de git utilizamos git fork (V/F): V
+
+Seccion 3:
+agregar los comandos debajo de el inciso. Ejemplo:
+a) realiza un cambio de una rama sobre la otra
+git checkout feature
+git rebase main
 
 Entrega del examen:
 Una vez que hayan terminado:
@@ -57,13 +68,13 @@ c) git upload <rama>
 d) git commit <rama>
 
 Sección 2: Verdadero o Falso
-6. git pull descarga cambios del repositorio remoto y los fusiona automáticamente en la rama actual. (V/F)
+6. git pull descarga cambios del repositorio remoto y los fusiona automáticamente en la rama actual. (V/F):
 
-7. git fetch es lo mismo que git pull. (V/F)
+7. git fetch es lo mismo que git pull. (V/F):
 
-8. Si haces git push sin haber hecho git add y git commit, tus cambios locales se subirán automáticamente. (V/F)
+8. Si haces git push sin haber hecho git add y git commit, tus cambios locales se subirán automáticamente. (V/F):
 
-9. Un archivo en estado "untracked" significa que ya está en la base de datos de Git. (V/F)
+9. Un archivo en estado "untracked" significa que ya está en la base de datos de Git. (V/F):
 
 
 Sección 3: Comandos y escenarios
