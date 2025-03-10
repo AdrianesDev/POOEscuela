@@ -96,4 +96,3 @@ git push origin <name-rama>
 e) Descargar cambios de la rama main desde GitHub y fusionarlos con tu código local:
 git pull origin main
 
-**El commit final es "termine examen"
