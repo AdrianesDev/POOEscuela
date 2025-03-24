@@ -3,12 +3,20 @@
 
 using namespace std;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a92061c2dee5067fb0c954f4427e4f07445c4df
 class PaymentMethod {
 public:
     virtual void processPayment(double amount) const = 0; 
     virtual ~PaymentMethod() {}
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a92061c2dee5067fb0c954f4427e4f07445c4df
 class CreditCardPayment : public PaymentMethod {
 private:
     string cardNumber;
@@ -19,6 +27,10 @@ public:
     }
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a92061c2dee5067fb0c954f4427e4f07445c4df
 class PayPalPayment : public PaymentMethod {
 private:
     string email;
