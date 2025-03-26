@@ -3,13 +3,11 @@
 
 using namespace std;
 
-
 class PaymentMethod {
 public:
     virtual void processPayment(double amount) const = 0; 
     virtual ~PaymentMethod() {}
 };
-
 
 class CreditCardPayment : public PaymentMethod {
 private:
@@ -20,7 +18,6 @@ public:
         cout << "Processing credit card payment of $" << amount << " using card: **** **** **** " << cardNumber.substr(cardNumber.length() - 4) << endl;
     }
 };
-
 
 class PayPalPayment : public PaymentMethod {
 private:
