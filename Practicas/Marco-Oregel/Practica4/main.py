@@ -67,5 +67,7 @@ print("-" * 65)
 user.logOutProcess()
 print("-" * 65)
 
+user.addBook(Book2)
+
 
 
