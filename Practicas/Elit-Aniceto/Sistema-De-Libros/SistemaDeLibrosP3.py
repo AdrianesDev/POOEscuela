@@ -19,36 +19,77 @@ class Book:
             print(f"El libro {self.title} no ha sido devuelto.")
 
 class User:
-    def __init__(self, Name):
+    def __init__(self, Name, Role):
         self.name = Name
+        self.role = Role
         self.BorrowedBooks = []
 
-    def Borrowed_Book(self, Book):
-        if not Book.isBorrowed:
-            Book.isBorrowed = True
-            self.BorrowedBooks.append(Book)
+    def CanBorrowed(self):
+        return self.role in ["Admin", "User"]
+    
+    def CanManageBooks(self):
+        return self.role == "Admin"
+
+    def BorrowedBook(self, book):
+        if not self.CanBorrowed():
+            print(f"ERROR: Los usuarios {self.role} no pueden tomar libros prestados.")
+            return
+        
+        if not book.isBorrowed:
+            book.Lend()
+            self.BorrowedBooks.append(book)
             print(f"{self.name} tomo prestado: {book.title}")
-        else:
+        else: 
             print(f"El libro {book.title} ya esta prestado.")
 
-    def Return_Book(self, Book):
-        if Book in self.BorrowedBooks:
-            Book.isBorrowed = False
-            self.BorrowedBooks.remove(Book)
+    def ReturnBook(self, book):
+        if book in self.BorrowedBooks:
+            book.ReturnBook()
+            self.BorrowedBooks.remove(book)
             print(f"{self.name} devolvio: {book.title}")
         else:
-            print(f"El libro {self.name} no exite ese libro.")
+            print(f"ERROR: {self.name} no tiene prestado el libro {book.title}")
+
+class Admin(User):
+    def __init__(self, name):
+        super().__init__(name, "Admin")
+
+class RegularUser(User):
+    def __init__(self, name):
+        super().__init__(name, "User")
+
+class Guest(User):
+    def __init__(self, name):
+        super().__init__(self, "Guest")
+
+    def BorrowedBook(self, book):
+        print(f"ERROR: Los invitados no pueden tomar libros prestados.")
 
 class Library:
     def __init__(self):
         self.catalog = []
 
-    def addBorrowed(self, Book):
-        if Book not in self.catalog:
-            self.catalog.append(Book)
-            print(f"Se agrego {book.title} al catalogo.")
+    def addBorrowed(self, user, book):
+        if not user.CanManageBooks():
+            print(f"ERROR: Solo los administradores pueden agregar libros.")
+            return
+        
+        if book not in self.catalog:
+            self.catalog.append(book) 
+            print(f"Se agrego {book.title}")
         else:
             print(f"El libro {book.title} ya esta en el catalogo.")
+
+    def RemoveBook(self, user, book):
+        if not user.CanManageBooks():
+            print(f"ERROR: Solo los administradores pueden eliminar libros del catalogo.")
+            return
+        
+        if book in self.catalog:
+            self.catalog.remove(book)
+            print(f"Se elimino {book.title} del catalogo.")
+        else: 
+            print(f"El libro {book.title} no exite en el catalogo.")
 
     def findBook(self, Title):
         for book in self.catalog:
@@ -64,9 +105,14 @@ class Library:
         else: 
             print("Libros disponible: ")
             for book in available:
-                print(f" - {book.title}")
+                print(f" - {book.title} por {book.author}")
 
 library = Library()
+
+admin = Admin("Adrian")
+user = RegularUser("Elit")
+guest = Guest("Juan")
+
 books = [
     Book("1984", "George Orwell"),
     Book("One Hundred Years of Solitude", "Gabriel Garcia Marquez"),
@@ -75,31 +121,31 @@ books = [
     Book("Harry Potter", "J.K Rowling"),
 ]
 
-
+print("\nAdmin agregando libros: ")
 for book in books:
-    library.addBorrowed(book)  
+    library.addBorrowed(admin, book)  
 
-print("-" * 10)
+print("\nUsuario regular intentando agregar libro:")
+new_book = Book("Fahrenheit 451", "Ray Bradbury")
+library.addBorrowed(user, book)
 
-user = User("Adrian")
+print("\nAdmin agregando un libro: ")
+library.addBorrowed(admin, book)
 
-print("-" * 10)
+print("\nLibros disponibles en la biblioteca: ")
+library.ShowAvailableBook()
 
-user.Borrowed_Book(library.findBook("1984"))  
-user.Borrowed_Book(library.findBook("One Hundred Years of Solitude"))
-user.Borrowed_Book(library.findBook("The Little Prince"))
+print("\nUsuario regular tomo prestado un libro: ")
+user.BorrowedBook(library.findBook("1984"))
 
-print([book.title for book in user.BorrowedBooks])
+print("\nInvitado intentando tomar prestado un libro: ")
+user.BorrowedBook(library.findBook("The Little Prince"))
 
-print("-" * 10)
+print("\nLibros disponibles despues de prestamos: ")
+library.ShowAvailableBook()
 
-library.ShowAvailableBook()  
+print("\nAdmin eliminando un libro: ")
+library.RemoveBook(admin, library.findBook("One Hundred Years of Solitude"))
 
-user.Return_Book(library.findBook("One Hundred Years of Solitude"))  
-user.Borrowed_Book(library.findBook("Fahrenheit 451"))
-
-print([book.title for book in user.BorrowedBooks])
-
-print("-" * 10)
-
+print("\nEstado final de los libros disponibles: ")
 library.ShowAvailableBook()
