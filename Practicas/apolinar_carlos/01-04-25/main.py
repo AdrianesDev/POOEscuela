@@ -1,6 +1,6 @@
 import random
 
-# Step 1: Spell class
+
 class Spell:
     def __init__(self, name, description):
         self.name = name
@@ -8,8 +8,9 @@ class Spell:
     
     def cast(self):
         return f"¡{self.name}! {self.description}."
+    
 
-# Step 2: Base MagicPerson class
+
 class MagicPerson:
     def __init__(self, name, age, house=None):
         self.name = name
@@ -23,7 +24,6 @@ class MagicPerson:
     def castSpell(self):
         print(f"{self.name} makes a generic magical gesture.")
 
-# Step 3: Student subclass
 class Student(MagicPerson):
     def __init__(self, name, age, years_at_hogwarts, favorite_spells, house=None):
         super().__init__(name, age, house)
@@ -37,7 +37,9 @@ class Student(MagicPerson):
         else:
             print(f"{self.name} tries to cast a spell but doesn't know any.")
 
-# Step 4: Professor subclass
+
+
+
 class Professor(MagicPerson):
     def __init__(self, name, age, subject, house=None):
         super().__init__(name, age, house)
@@ -46,7 +48,8 @@ class Professor(MagicPerson):
     def castSpell(self):
         print(f"{self.name}, {self.subject} professor, casts a powerful spell: ¡{self.subject} Maxima!")
 
-# Step 5: SortingHat class
+
+
 class SortingHat:
     HOUSES = ["Gryffindor", "Slytherin", "Ravenclaw", "Hufflepuff"]
     
@@ -56,8 +59,10 @@ class SortingHat:
         person.house = house
         print(f"¡{person.name}, you belong to... {house.upper()}!")
         return house
+    
 
-# Spell creation
+    
+
 spells = [
     Spell("Expelliarmus", "disarms your opponent"),
     Spell("Lumos", "lights up your wand"),
@@ -71,7 +76,7 @@ spells = [
     Spell("Rictusempra", "tickles the opponent and disarms them")
 ]
 
-# Student creation
+
 harry = Student("Harry Potter", 11, 1, [spells[0], spells[5], spells[7]])
 hermione = Student("Hermione Granger", 11, 1, [spells[3], spells[4], spells[8]])
 ron = Student("Ron Weasley", 11, 1, [spells[0], spells[3], spells[9]])
@@ -79,7 +84,6 @@ draco = Student("Draco Malfoy", 11, 1, [spells[0], spells[5], spells[6]])
 luna = Student("Luna Lovegood", 11, 1, [spells[2], spells[3], spells[7]])
 neville = Student("Neville Longbottom", 11, 1, [spells[3], spells[5], spells[8]])
 
-# Professor creation
 dumbledore = Professor("Albus Dumbledore", 115, "Headmaster")
 mcgonagall = Professor("Minerva McGonagall", 60, "Transfiguration")
 snape = Professor("Severus Snape", 38, "Potions")
@@ -88,7 +92,6 @@ flitwick = Professor("Filius Flitwick", 45, "Charms")
 trelawney = Professor("Sybill Trelawney", 50, "Divination")
 hagrid = Professor("Rubeus Hagrid", 45, "Care of Magical Creatures")
 
-# House assignment
 SortingHat.assignHouse(harry)
 SortingHat.assignHouse(hermione)
 SortingHat.assignHouse(ron)
@@ -104,14 +107,13 @@ SortingHat.assignHouse(flitwick)
 SortingHat.assignHouse(trelawney)
 SortingHat.assignHouse(hagrid)
 
-# Demonstration
-print("\n--- Introductions ---")
+print("Introductions")
 harry.introduce()
 hermione.introduce()
 dumbledore.introduce()
 snape.introduce()
 
-print("\n--- Spell Casting ---")
+print("Spell Casting")
 harry.castSpell()
 hermione.castSpell()
 ron.castSpell()
