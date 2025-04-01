@@ -7,9 +7,13 @@ class Book:
     def description(self) -> str:
         return f"'{self.title}' por {self.author}"
 
-class User:
+class Person:
     def __init__(self, name: str):
         self.name = name
+
+class User(Person):
+    def __init__(self, name: str):
+        super().__init__(name)
         self.borrowedBooks: list[Book] = []
 
     def borrowBook(self, book: Book):
@@ -31,19 +35,49 @@ class User:
         else:
             print(f"{self.name} no tiene el libro '{book.title}' prestado.")
 
+class Admin(User):
+    def __init__(self, name: str):
+        super().__init__(name)
+
+    def addBookToLibrary(self, library, book: Book):
+        library._addBook(book)
+        print(f"{self.name} agregó el libro: {book.description()}")
+
+    def removeBookFromLibrary(self, library, title: str):
+        book = library.findBook(title)
+        if book:
+            if book.isBorrowed:
+                print(f"No se puede eliminar el libro '{title}' porque está prestado.")
+            else:
+                library._removeBook(book)
+                print(f"{self.name} eliminó el libro: {book.description()}")
+        else:
+            print(f"No se encontró el libro '{title}' para eliminar.")
+
+class Guest(Person):
+    def __init__(self, name: str):
+        super().__init__(name)
+
+    def borrowBook(self, book: Book):
+        print(f"{self.name} inicia sesión para tomar libros prestados.")
+
+    def returnBook(self, book: Book):
+        print(f"{self.name} no hay libros para devolver.")
+
 class Library:
     def __init__(self):
         self.catalog: list[Book] = []
 
-    def addBook(self, book: Book):
+    def _addBook(self, book: Book):
         self.catalog.append(book)
-        print(f"Libro agregado al catálogo: {book.description()}")
+        
+    def _removeBook(self, book: Book):
+        self.catalog.remove(book)
 
     def findBook(self, title: str) -> Book | None:
         for book in self.catalog:
             if book.title.lower() == title.lower():
-                return book
-        print(f"No se encontró el libro con título '{title}'")
+                return book       
         return None
 
     def showAvailableBooks(self):
@@ -55,26 +89,36 @@ class Library:
             for book in disponibles:
                 print(f"- {book.description()}")
 
-library = Library()
-book1 = Book("La paciente silenciosa", "Alex Michaelides")
-book2 = Book("El jardin de las mariposas", "Dot Hutchison")
-book3 = Book("Invisible", "Eloy Moreno")
-book4 = Book("Tu mentira más dulce", "Maria Goodin")
+biblioteca = Library()
 
-library.addBook(book1)
-library.addBook(book2)
-library.addBook(book3)
-library.addBook(book4)
+# Crear personas con distintos roles
+admin = Admin("Wendy Lopez")
+usuario = User("Stefhany Cruz")
+invitado = Guest("Veronica Garibaldi")
 
-user = User("Stefhany Cruz")
+# Admin agrega libros
+admin.addBookToLibrary(biblioteca, Book("La paciente silenciosa", "Alex Michaelides"))
+admin.addBookToLibrary(biblioteca, Book("El jardin de las mariposas", "Dot Hutchison"))
+admin.addBookToLibrary(biblioteca, Book("Tu mentira más dulce", "Maria Goodin"))
 
-user.borrowBook(book1)
-user.borrowBook(book2)
-user.borrowBook(book3)
-user.borrowBook(book4)  
+# Todos ven los libros disponibles
+biblioteca.showAvailableBooks()
 
-library.showAvailableBooks()
+# Usuario toma un libro
+libro = biblioteca.findBook("El jardin de las mariposas")
+if libro:
+    usuario.borrowBook(libro)
 
-user.returnBook(book2)
+# Invitado intenta tomar un libro
+libro2 = biblioteca.findBook("Tu mentira más dulce")
+if libro2:
+    invitado.borrowBook(libro2)
 
-library.showAvailableBooks()
+# Admin intenta eliminar un libro prestado
+admin.removeBookFromLibrary(biblioteca, "El jardin de las mariposas")
+
+# Usuario devuelve el libro
+usuario.returnBook(libro)
+
+# Admin elimina el libro
+admin.removeBookFromLibrary(biblioteca, "El jardin de las mariposas")
