@@ -9,7 +9,7 @@ class Pet:
         return f"{self.name} is a {self.type} and is {self.age} years old. it's {status}"
     def adopt(self):
         if not self.isAdopted:
-            self.isAdopted = False
+            self.isAdopted = True
             print(f"{self.name} has not been adopted.")
         else:
             print(f"{self.name} has already been adopted.")
