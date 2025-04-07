@@ -24,8 +24,7 @@ public class MarvelCharacter {
     }
 
     public void updateAge(int newAge) {
-        if (newAge > 0) {
-            this.age = newAge;
-        }
+        
+        this.age = newAge;
     }
 }
