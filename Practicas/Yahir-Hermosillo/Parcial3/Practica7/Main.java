@@ -7,7 +7,7 @@ public class Main {
         showHeroPower(peter);
 
         System.out.println("La edad de Iron Man es: " + tony.getAge());
-        tony.updateAge(51);
+        tony.updateAge(-5);
         System.out.println("Ahora Iron Man tiene: " + tony.getAge());
     }
 
